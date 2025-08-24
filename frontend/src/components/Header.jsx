@@ -32,9 +32,17 @@ const Header = () => {
       >
         {/* Right side dropdowns */}
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          {/* Cart */}
+          <Link to="/cart" className="flex items-center  cursor-pointer">
+            <IoCartSharp /> Cart
+          </Link>
+
           {/* Admin Dropdown */}
           <div className="dropdown dropdown-end">
-            <button tabIndex={0} className="cursor-pointer flex items-center gap-1">
+            <button
+              tabIndex={0}
+              className="cursor-pointer flex items-center gap-1"
+            >
               Admin <IoMdArrowDropdown />
             </button>
             <ul
@@ -55,7 +63,10 @@ const Header = () => {
 
           {/* User Dropdown */}
           <div className="dropdown dropdown-end">
-            <button tabIndex={0} className="cursor-pointer flex items-center gap-1">
+            <button
+              tabIndex={0}
+              className="cursor-pointer flex items-center gap-1"
+            >
               razibul <IoMdArrowDropdown />
             </button>
             <ul
@@ -70,14 +81,6 @@ const Header = () => {
               </li>
             </ul>
           </div>
-
-          {/* Cart */}
-          <Link
-            to="/cart"
-            className="flex items-center gap-1 cursor-pointer"
-          >
-            <IoCartSharp /> Cart
-          </Link>
         </div>
 
         {/* Search */}
