@@ -1,10 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Cart = ({product}) => {
-  
+// Simple Rating Component
+const Rating = ({ value, text }) => {
   return (
-   <div className="bg-white shadow-md rounded-lg overflow-hidden my-3 p-3 hover:shadow-lg transition-shadow duration-300">
+    <div className="flex items-center gap-1 text-yellow-400">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span key={star}>
+          {value >= star ? '★' : value >= star - 0.5 ? '☆' : '☆'}
+        </span>
+      ))}
+      {text && <span className="text-gray-600 text-sm ml-2">{text}</span>}
+    </div>
+  );
+};
+
+const Cart = ({ product }) => {
+  return (
+    <div className="bg-white shadow-md rounded-lg overflow-hidden my-3 p-3 hover:shadow-lg transition-shadow duration-300">
       <Link to={`/product/${product._id}`}>
         <img
           src={product.image}
@@ -21,13 +34,16 @@ const Cart = ({product}) => {
         </Link>
 
         <div className="mt-2">
-          <span value={product.rating} text={`${product.numReviews} reviews`} />
+          <Rating
+            value={product.rating}
+            text={`${product.numReviews} reviews`}
+          />
         </div>
 
         <h3 className="mt-2 text-xl font-bold">${product.price}</h3>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

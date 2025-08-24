@@ -1,62 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoCartSharp } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <div className="navbar bg-slate-700 text-white px-6">
+    <div className="bg-slate-700 text-white px-4 py-2 md:flex md:items-center md:justify-between">
       {/* Left - Logo */}
-      <div className="navbar-start">
-        <Link to="/" className="btn btn-ghost normal-case text-xl font-bold">
+      <div className="flex justify-between items-center">
+        <Link to="/" className="text-xl font-bold">
           ProShop
         </Link>
+
+        {/* Hamburger for Mobile */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
+        </button>
       </div>
 
-      {/* Center - Search */}
-      <div className="navbar-center flex">
-        <input
-          type="text"
-          placeholder="Search Products..."
-          className="input input-bordered w-28 md:w-96 text-black"
-        />
-        <button className="btn btn-outline btn-success ml-2">Search</button>
-      </div>
+      {/* Menu */}
+      <div
+        className={`${
+          menuOpen ? "block" : "hidden"
+        } md:flex md:items-center md:justify-between md:flex-row-reverse mt-2 md:mt-0 gap-4`}
+      >
+        {/* Right side dropdowns */}
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+          {/* Admin Dropdown */}
+          <div className="dropdown dropdown-end">
+            <button tabIndex={0} className="cursor-pointer flex items-center gap-1">
+              Admin <IoMdArrowDropdown />
+            </button>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-white text-black rounded-box w-40"
+            >
+              <li>
+                <Link to="/admin/products">Products</Link>
+              </li>
+              <li>
+                <Link to="/admin/orders">Orders</Link>
+              </li>
+              <li>
+                <Link to="/admin/users">Users</Link>
+              </li>
+            </ul>
+          </div>
 
-      {/* Right - Cart + User + Admin */}
-      <div className="navbar-end gap-4">
-        {/* Cart */}
-        <Link to="/cart" className="flex items-center gap-1 cursor-pointer">
-          <IoCartSharp /> <span>Cart</span>
-        </Link>
+          {/* User Dropdown */}
+          <div className="dropdown dropdown-end">
+            <button tabIndex={0} className="cursor-pointer flex items-center gap-1">
+              razibul <IoMdArrowDropdown />
+            </button>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-white text-black rounded-box w-40"
+            >
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <button>Logout</button>
+              </li>
+            </ul>
+          </div>
 
-        {/* User Dropdown */}
-        <div className="dropdown dropdown-end">
-          <button tabIndex={0} className="cursor-pointer flex items-center gap-1">
-            razibul <IoMdArrowDropdown />
-          </button>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-black rounded-box w-40"
+          {/* Cart */}
+          <Link
+            to="/cart"
+            className="flex items-center gap-1 cursor-pointer"
           >
-            <li><Link to="/profile">Profile</Link></li>
-            <li><button>Logout</button></li>
-          </ul>
+            <IoCartSharp /> Cart
+          </Link>
         </div>
 
-        {/* Admin Dropdown */}
-        <div className="dropdown dropdown-end">
-          <button tabIndex={0} className="cursor-pointer flex items-center gap-1">
-            Admin <IoMdArrowDropdown />
-          </button>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-black rounded-box w-40"
-          >
-            <li><Link to="/admin/products">Products</Link></li>
-            <li><Link to="/admin/orders">Orders</Link></li>
-            <li><Link to="/admin/users">Users</Link></li>
-          </ul>
+        {/* Search */}
+        <div className="flex gap-2 mb-2 md:mb-0">
+          <input
+            type="text"
+            placeholder="Search Products..."
+            className="input input-bordered w-40 md:w-64 text-black"
+          />
+          <button className="btn btn-outline btn-success">Search</button>
         </div>
       </div>
     </div>
