@@ -1,7 +1,7 @@
 import Cart from "../components/Cart";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from 'axios';
+import baseUrl from "../api/axiosInstance";
 
 
 const HomeScreen = () => {
@@ -10,7 +10,8 @@ const HomeScreen = () => {
   useEffect(()=>{
 
     const fetchProducts = async ()=>{
-      const {data}=await axios.get('/api/products');
+      const {data}=await baseUrl.get('/api/products');
+      console.log(data);
       setProducts(data);
     }
     fetchProducts();

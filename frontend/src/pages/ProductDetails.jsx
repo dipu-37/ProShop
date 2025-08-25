@@ -1,10 +1,22 @@
 import { Link, useParams } from "react-router-dom";
-import products from "../product/products";
 import { Rating } from "../components/Rating";
+import { useState } from "react";
+import { useEffect } from "react";
+import baseUrl from "../api/axiosInstance";
 
 const ProductScreenUI = () => {
   const { id: productId } = useParams();
-  const product = products.find((p) => p._id === productId);
+  const [product,setProducts]=useState([]);
+
+  useEffect(()=>{
+  const fetchProducts = async ()=>{
+    const {data} = await baseUrl.get(`/api/products/${productId}`);
+    setProducts(data);
+  }
+  fetchProducts();
+  },[productId])
+
+
   return (
     <div className="p-6">
       {/* Back Button */}
