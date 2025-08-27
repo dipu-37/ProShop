@@ -1,4 +1,3 @@
-import asyncHandler  from 'express-async-handler';
 
 const asyncHandler = (fn) => {
   return async (req, res, next) => {
