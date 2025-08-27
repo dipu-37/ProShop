@@ -1,6 +1,6 @@
 import asyncHandler  from 'express-async-handler';
 
-const wrapAsync = (fn) => {
+const asyncHandler = (fn) => {
   return async (req, res, next) => {
     try {
       await fn(req, res, next);
@@ -10,4 +10,4 @@ const wrapAsync = (fn) => {
   };
 };
 
-export { wrapAsync };
+export default asyncHandler;
