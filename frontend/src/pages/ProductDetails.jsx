@@ -51,7 +51,7 @@ const ProductScreenUI = () => {
         </div>
 
         {/* Purchase Card */}
-        <div className=" rounded-xl shadow-lg p-4">
+        <div className=" rounded-xl shadow-lg p-4 border">
           <div className="flex justify-between mb-2">
             <span>Price:</span>
             <strong>$99.99</strong>
@@ -119,7 +119,7 @@ const ProductScreenUI = () => {
             </div>
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg shadow"
+              className="bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded-lg shadow"
             >
               Submit
             </button>

@@ -1,9 +1,10 @@
 import express from 'express'; 
-import mongoose from 'mongoose'; 
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import products from './data/products.js';
+import connectDB from './config/db.js';
+
 
 const app = express();
 app.use(cookieParser());
@@ -27,21 +28,13 @@ app.get('/api/products/:id',(req,res)=>{
     res.json(product);
 })
 
+
 // MongoDB connection
-let isConnected = false;
-async function main() {
-  try {
-    if (!isConnected) {
-      await mongoose.connect(process.env.MONGODB_URL);
-      isConnected = true;
-      console.log('✅ Database connected');
-       app.listen(process.env.PORT, () => {console.log(`App listening on port ${process.env.PORT}`);
- });
-    }
-  } catch (error) {
-    console.error('❌ MongoDB error:', error.message);
-  }
-}
-main();
+// DB connect first
+connectDB().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`🚀 Server running on port ${process.env.PORT}`);
+  });
+});
 
 export default app;
