@@ -28,3 +28,10 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+
+
+
+// const items = [];
+// function addItem(text) {
+//   items.push({...text, Comment: false});
+// }
