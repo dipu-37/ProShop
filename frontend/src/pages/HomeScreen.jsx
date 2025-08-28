@@ -1,4 +1,5 @@
 import Cart from "../components/Cart";
+import Loading from "../components/Loding.jsx";
 // import { useState } from "react";
 // import { useEffect } from "react";
 // import baseUrl from "../api/axiosInstance";
@@ -17,10 +18,13 @@ const HomeScreen = () => {
   //   fetchProducts();
   // },[])
 
+
+  // {isLoading ? () : error ? () : ()}
+
   const { data: products, isLoading, error } = useGetProductsQuery();
   console.log(products);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading></Loading>;
   if (error) return <div>Error loading products</div>;
 
   return (

@@ -1,21 +1,26 @@
 import { Link, useParams } from "react-router-dom";
 import { Rating } from "../components/Rating";
-import { useState } from "react";
-import { useEffect } from "react";
-import baseUrl from "../api/axiosInstance";
+import { useGetProductByIdQuery } from "../features/productApiSlice";
+// import { useState } from "react";
+// import { useEffect } from "react";
+// import baseUrl from "../api/axiosInstance";
 
 const ProductScreenUI = () => {
   const { id: productId } = useParams();
-  const [product,setProducts]=useState([]);
+  // const [product,setProducts]=useState([]);
 
-  useEffect(()=>{
-  const fetchProducts = async ()=>{
-    const {data} = await baseUrl.get(`/api/products/${productId}`);
-    setProducts(data);
-  }
-  fetchProducts();
-  },[productId])
+  // useEffect(()=>{
+  // const fetchProducts = async ()=>{
+  //   const {data} = await baseUrl.get(`/api/products/${productId}`);
+  //   setProducts(data);
+  // }
+  // fetchProducts();
+  // },[productId])
 
+  const { data: product , isLoading, error } = useGetProductByIdQuery(productId);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading product</div>;
 
   return (
     <div className="p-6">
@@ -31,7 +36,7 @@ const ProductScreenUI = () => {
         {/* Product Image */}
         <div>
           <img
-            src={product.image}
+            src={product?.image}
             alt="Product"
             className="rounded-lg shadow w-full"
           />
@@ -39,15 +44,15 @@ const ProductScreenUI = () => {
 
         {/* Product Details */}
         <div>
-          <h3 className="text-2xl font-bold mb-2">{product.name}</h3>
+          <h3 className="text-2xl font-bold mb-2">{product?.name}</h3>
           <p className="text-yellow-500">
             <Rating
-              value={product.rating}
-              text={`${product.numReviews}`}
+              value={product?.rating}
+              text={`${product?.numReviews}`}
             ></Rating>
           </p>
-          <p className="text-lg font-semibold mt-2">Price: ${product.price}</p>
-          <p className="text-gray-600 mt-2">{product.description}</p>
+          <p className="text-lg font-semibold mt-2">Price: ${product?.price}</p>
+          <p className="text-gray-600 mt-2">{product?.description}</p>
         </div>
 
         {/* Purchase Card */}
@@ -59,7 +64,7 @@ const ProductScreenUI = () => {
           <div className="flex justify-between mb-2">
             <span>Status:</span>
             <span className="text-green-600 font-semibold">
-              {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+              {product?.countInStock > 0 ? "In Stock" : "Out of Stock"}
             </span>
           </div>
 
