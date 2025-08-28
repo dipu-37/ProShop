@@ -2,8 +2,7 @@ import Cart from "../components/Cart";
 // import { useState } from "react";
 // import { useEffect } from "react";
 // import baseUrl from "../api/axiosInstance";
-import { useGetProductsQuery } from "../api/baseApi";
-
+import { useGetProductsQuery } from "../features/productApiSlice.js";
 
 const HomeScreen = () => {
 
