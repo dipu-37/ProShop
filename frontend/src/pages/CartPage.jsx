@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 import { useForm, Controller } from "react-hook-form";
-import { addToCart } from "../features/cartSlice";
+import { addToCart, removeFromCart } from "../features/cartSlice";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -14,18 +14,18 @@ const CartPage = () => {
   const { cartItem } = cart;
   console.log("Cart Items:", cartItem);
 
-  const { control, handleSubmit, setValue } = useForm();
+  const { control } = useForm();
 
   const addToCartHandler = (product, qty) => {
-    // dispatch(addToCart({ ...product, qty }));
+     dispatch(addToCart({ ...product, qty }));
   };
 
   const removeFromCartHandler = (id) => {
-    // dispatch(removeFromCart(id));
+     dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
-    // navigate("/login?redirect=/shipping");
+     navigate("/login?redirect=/shipping");
   };
 
   return (
@@ -66,7 +66,7 @@ const CartPage = () => {
                     <p className="text-gray-600 mt-1">${item.price}</p>
                   </div>
 
-                 <div className="flex items-center gap-4 pr-7">
+                 <div className="flex items-center gap-4 ">
                      {/* Qty Selector */}
                   <Controller 
                     name={`qty-${item._id}`}
@@ -105,7 +105,7 @@ const CartPage = () => {
         </div>
 
         {/* Right - Summary */}
-        <div className="w-1/3 mt-4 md:mt-0">
+        <div className="lg:w-1/3 mt-4 md:mt-0 ">
           <div className=" rounded p-4 shadow space-y-4">
             <h2 className="text-xl font-semibold">
               Subtotal ({cartItem.reduce((acc, item) => acc + item.qty, 0)})
@@ -120,7 +120,7 @@ const CartPage = () => {
             <button
               onClick={checkoutHandler}
               disabled={cartItem.length === 0}
-              className={`w-full py-2 rounded-lg text-white font-semibold ${
+              className={`w-full  py-2 rounded-lg text-white font-semibold ${
                 cartItem.length === 0
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-slate-700 hover:bg-slate-600"
