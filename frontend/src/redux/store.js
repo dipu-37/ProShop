@@ -14,3 +14,6 @@ export const store = configureStore({
     getDefaultMiddleware().concat(baseApi.middleware),
 })
 
+
+// access the cart state
+//  const selectCart = (state) => state.cart;

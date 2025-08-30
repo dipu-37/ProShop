@@ -5,12 +5,14 @@ import Header from './components/Header';
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen flex flex-col"> 
       <Header />
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-       <Outlet></Outlet>
-      </main>
-      <Footer />
+      <div className='relative flex-grow'>
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 pb-20">
+          <Outlet />
+        </main>
+      </div>
+      <Footer className="absolute bottom-0 left-0 w-full" />
     </div>
   );
 }

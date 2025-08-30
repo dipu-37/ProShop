@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { IoCartSharp } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // access the cart state
+  const cart = useSelector((state) => state.cart);
+
   return (
-    <div className="bg-slate-700 text-white px-4 py-2 md:flex md:items-center md:justify-between">
+    <div className="bg-slate-700 text-white px-6 py-4 md:flex md:items-center md:justify-between">
       {/* Left - Logo */}
       <div className="flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">
@@ -33,8 +36,30 @@ const Header = () => {
         {/* Right side dropdowns */}
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
           {/* Cart */}
-          <Link to="/cart" className="flex items-center  cursor-pointer">
-            <IoCartSharp /> Cart
+          <Link
+            to="/cart"
+            className="btn btn-ghost btn-circle relative flex items-center"
+          >
+            <div className="indicator">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              <span className="badge badge-sm indicator-item">
+                {cart?.cartItem?.reduce((acc, item) => acc + item.qty, 0)}
+              </span>
+            </div>
+           
           </Link>
 
           {/* Admin Dropdown */}
@@ -67,7 +92,7 @@ const Header = () => {
               tabIndex={0}
               className="cursor-pointer flex items-center gap-1"
             >
-              razibul <IoMdArrowDropdown />
+              User <IoMdArrowDropdown />
             </button>
             <ul
               tabIndex={0}
