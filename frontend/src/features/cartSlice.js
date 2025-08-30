@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 // { key: value } → object
 // [] → array
@@ -7,39 +7,75 @@ import {createSlice} from "@reduxjs/toolkit";
 // state = initialState
 // state.cartItem = []
 
-const initialState = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : {cartItem : []};
+const initialState = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : { cartItem: [] };
 
 const addDecimal = (num) => {
-    return Math.round((num * 100) / 100).toFixed(2);
-}
+  return Math.round((num * 100) / 100).toFixed(2);
+};
 
 const cartSlice = createSlice({
-    name : "cart",
-    initialState,
-    reducers: {
-        addToCart: (state, action) => {
-            // note : we don't need to user,rating , numReview or reviews
-            const item = action.payload;
-            const existingItem = state.cartItem.find((i) => i.id === item.id);
-            if (existingItem) {
-                state.cartItem = state.cartItem.map((i) => i._id === existingItem._id ? item : i);
-            } else {
-                state.cartItem = [...state.cartItem, item];
-            }
-            // calculate item price 
-            // calculate shipping price
-            // calculate tax price
-            // calculate total price
+  name: "cart",
+  initialState,
+  reducers: {
+    addToCart: (state, action) => {
+      // note : we don't need to user,rating , numReview or reviews
+      const item = action.payload;
+      console.log("Item to add:", item);
+      const existingItem = state.cartItem.find((i) => i._id === item._id);
+      if (existingItem) {
+        state.cartItem = state.cartItem.map((i) =>
+          i._id === existingItem._id ? item : i
+        );
+      } else {
+        state.cartItem = [...state.cartItem, item];
+      }
+      // calculate item price
+      // calculate shipping price
+      // calculate tax price
+      // calculate total price
 
-            state.itemPrice = addDecimal(state.cartItem.reduce((acc, item) => acc + item.price * item.qty, 0));
-            state.shippingPrice = addDecimal(state.itemPrice > 100 ? 0 : 10);
-            state.taxPrice = addDecimal(0.15 * state.itemPrice);
-            state.totalPrice = addDecimal(state.itemPrice + state.shippingPrice + state.taxPrice).toFixed(2);
+      const itemPriceNum = state.cartItem.reduce(
+        (acc, item) => acc + item.price * item.qty,
+        0
+      );
+      state.itemPrice = addDecimal(itemPriceNum);
+      state.shippingPrice = addDecimal(itemPriceNum > 100 ? 0 : 10);
+      state.taxPrice = addDecimal(0.15 * itemPriceNum);
+      state.totalPrice = addDecimal(
+        parseFloat(state.itemPrice) +
+          parseFloat(state.shippingPrice) +
+          parseFloat(state.taxPrice)
+      );
 
-            localStorage.setItem("cart", JSON.stringify(state));
-        },
-    }
-})
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
+  },
+});
 
 export const { addToCart } = cartSlice.actions;
 export default cartSlice.reducer;
+
+// state = {
+//   cartItem: [
+//     {
+//       id: "p1",
+//       name: "Laptop",
+//       price: 500,
+//       qty: 2,
+//       image: "/laptop.jpg"
+//     },
+//     {
+//       id: "p2",
+//       name: "Headphone",
+//       price: 50,
+//       qty: 1,
+//       image: "/headphone.jpg"
+//     }
+//   ],
+//   itemPrice: "1050.00",
+//   shippingPrice: "0.00",
+//   taxPrice: "157.50",
+//   totalPrice: "1207.50"
+// }

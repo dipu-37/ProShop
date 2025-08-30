@@ -1,23 +1,32 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Rating } from "../components/Rating";
 import { useGetProductByIdQuery } from "../features/productApiSlice";
-// import { useState } from "react";
-// import { useEffect } from "react";
-// import baseUrl from "../api/axiosInstance";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cartSlice";
+import { useState } from "react";
 
 const ProductScreenUI = () => {
   const { id: productId } = useParams();
-  // const [product,setProducts]=useState([]);
+  const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
 
-  // useEffect(()=>{
-  // const fetchProducts = async ()=>{
-  //   const {data} = await baseUrl.get(`/api/products/${productId}`);
-  //   setProducts(data);
-  // }
-  // fetchProducts();
-  // },[productId])
+  const dispatch = useDispatch();
+  const [qty, setQty] = useState(1); // qty state
+  const navigate = useNavigate();
 
-  const { data: product , isLoading, error } = useGetProductByIdQuery(productId);
+
+  // Add To Cart handler
+  const addToCartHandler = () => {
+    console.log("Add to cart clicked");
+    console.log("Product:", product, qty);
+    dispatch(
+      addToCart({
+        ...product,
+        qty, // selected quantity
+      })
+    );
+   // navigate to cart
+   navigate("/cart");
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading product</div>;
@@ -56,10 +65,10 @@ const ProductScreenUI = () => {
         </div>
 
         {/* Purchase Card */}
-        <div className=" rounded-xl shadow-lg p-4 border">
+        <div className=" rounded-xl shadow-lg p-4 w-full md:w-80 h-fit ">
           <div className="flex justify-between mb-2">
             <span>Price:</span>
-            <strong>$99.99</strong>
+            <strong>${product?.price}</strong>
           </div>
           <div className="flex justify-between mb-2">
             <span>Status:</span>
@@ -69,66 +78,27 @@ const ProductScreenUI = () => {
           </div>
 
           {/* Qty Input */}
-          <div className="mb-4">
-            <label className="block mb-1">Qty</label>
-            <input
-              type="number"
-              min="1"
-              max="99" // you can set product.countInStock here dynamically
-              defaultValue="1"
-              className="w-full border rounded-lg p-2"
-            />
-          </div>
+          {product?.countInStock > 0 && (
+            <div className="mb-4">
+              <label className="block mb-1">Qty</label>
+              <input
+                type="number"
+                min="1"
+                max={product?.countInStock || 99}
+                value={qty}
+                onChange={(e) => setQty(Number(e.target.value))}
+                className="w-full border rounded-lg p-2"
+              />
+            </div>
+          )}
 
-          <button className="w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg shadow">
+          <button
+            onClick={addToCartHandler}
+            disabled={product?.countInStock === 0}
+            className="w-full bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg shadow disabled:bg-gray-400"
+          >
             Add To Cart
           </button>
-        </div>
-      </div>
-
-      {/* Reviews Section */}
-      <div className="mt-10 max-w-2xl">
-        <h2 className="text-xl font-bold mb-4">Reviews</h2>
-
-        {/* Single Review */}
-        <div className="border rounded-lg p-4 mb-4 shadow">
-          <p className="font-semibold">John Doe</p>
-          <p className="text-yellow-500">⭐⭐⭐⭐⭐</p>
-          <p className="text-sm text-gray-500">2025-08-24</p>
-          <p className="mt-2">Great product! Highly recommend.</p>
-        </div>
-
-        {/* Review Form */}
-        <div className="border rounded-lg p-4 shadow">
-          <h3 className="text-lg font-semibold mb-2">
-            Write a Customer Review
-          </h3>
-          <form className="space-y-3">
-            <div>
-              <label className="block mb-1">Rating</label>
-              <select className="w-full border rounded-lg p-2">
-                <option>Select...</option>
-                <option>1 - Poor</option>
-                <option>2 - Fair</option>
-                <option>3 - Good</option>
-                <option>4 - Very Good</option>
-                <option>5 - Excellent</option>
-              </select>
-            </div>
-            <div>
-              <label className="block mb-1">Comment</label>
-              <textarea
-                className="w-full border rounded-lg p-2"
-                rows="3"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded-lg shadow"
-            >
-              Submit
-            </button>
-          </form>
         </div>
       </div>
     </div>
@@ -136,3 +106,73 @@ const ProductScreenUI = () => {
 };
 
 export default ProductScreenUI;
+
+
+
+//  {/* Reviews Section */}
+//       <div className="mt-10 max-w-2xl">
+//         <h2 className="text-xl font-bold mb-4">Reviews</h2>
+
+//         {/* Single Review */}
+//         <div className="border rounded-lg p-4 mb-4 shadow">
+//           <p className="font-semibold">John Doe</p>
+//           <p className="text-yellow-500">⭐⭐⭐⭐⭐</p>
+//           <p className="text-sm text-gray-500">2025-08-24</p>
+//           <p className="mt-2">Great product! Highly recommend.</p>
+//         </div>
+
+//         {/* Review Form */}
+//         <div className="border rounded-lg p-4 shadow">
+//           <h3 className="text-lg font-semibold mb-2">
+//             Write a Customer Review
+//           </h3>
+
+//           <form onSubmit={handleSubmit(submitHandler)} className="space-y-3">
+//             {/* Rating Select */}
+//             <div>
+//               <label className="block mb-1">Rating</label>
+//               <select
+//                 {...register("rating", { required: "Rating is required" })}
+//                 className="w-full border rounded-lg p-2"
+//               >
+//                 <option value="">Select...</option>
+//                 <option value="1">1 - Poor</option>
+//                 <option value="2">2 - Fair</option>
+//                 <option value="3">3 - Good</option>
+//                 <option value="4">4 - Very Good</option>
+//                 <option value="5">5 - Excellent</option>
+//               </select>
+//               {errors.rating && (
+//                 <p className="text-red-500 text-sm">{errors.rating.message}</p>
+//               )}
+//             </div>
+
+//             {/* Comment Input */}
+//             <div>
+//               <label className="block mb-1">Comment</label>
+//               <textarea
+//                 {...register("comment", {
+//                   required: "Comment is required",
+//                   minLength: {
+//                     value: 5,
+//                     message: "Comment must be at least 5 characters"
+//                   }
+//                 })}
+//                 className="w-full border rounded-lg p-2"
+//                 rows="3"
+//               ></textarea>
+//               {errors.comment && (
+//                 <p className="text-red-500 text-sm">{errors.comment.message}</p>
+//               )}
+//             </div>
+
+//             {/* Submit Button */}
+//             <button
+//               type="submit"
+//               className="bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded-lg shadow"
+//             >
+//               Submit
+//             </button>
+//           </form>
+//         </div>
+//       </div>
