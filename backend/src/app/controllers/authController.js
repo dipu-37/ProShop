@@ -15,13 +15,11 @@ const loginUser = async (req, res) => {
   const user = await User.findOne({ email });
   if(user && (await user.matchPassword(password))) {
     const token = generateToken(res, user._id);
-    console.log(token)
     res.json({
         _id : user._id,
         name :user.name ,
         email : user.email,
         isAdmin : user.isAdmin,
-        token : token
     })
   }else {
     res.status(401);

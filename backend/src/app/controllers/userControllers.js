@@ -1,4 +1,3 @@
-
 import User from "../models/userModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 // @desc    Get user profile
@@ -15,18 +14,24 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+  
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    const updateUser = await user.save();
+    res.json({
+      _id: updateUser._id,
+      name: updateUser.name,
+      email: updateUser.email,
+      isAdmin: updateUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
   }
-
-  user.name = req.body.name || user.name;
-  user.email = req.body.email || user.email;
-  if (req.body.password) {
-    user.password = req.body.password;
-  }
-
-  await user.save();
-  res.json(user);
 });
 
 // @desc    Delete user
@@ -35,11 +40,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: "User not found" });
   }
 
   await user.remove();
-  res.json({ message: 'User removed' });
+  res.json({ message: "User removed" });
 });
 
 // @desc    Get all users
@@ -50,14 +55,13 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
-
 // @desc    Get user by ID
 // @route   GET /api/users/:id
 // @access  Private
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: "User not found" });
   }
   res.json(user);
 });
@@ -68,7 +72,7 @@ const getUserById = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: "User not found" });
   }
 
   user.name = req.body.name || user.name;
@@ -81,6 +85,11 @@ const updateUser = asyncHandler(async (req, res) => {
   res.json(user);
 });
 
-
-
-export { getUserProfile, updateUserProfile, getUsers, deleteUser, getUserById, updateUser };
+export {
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  deleteUser,
+  getUserById,
+  updateUser,
+};
