@@ -1,12 +1,12 @@
 
 import jwt from 'jsonwebtoken';
-import asyncHandler from './asyncHandler';
+import asyncHandler from './asyncHandler.js';
 import User from '../models/userModel.js';
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   // Check for token in headers
-  token = req.cookies.token || req.headers.authorization && req.headers.authorization.startsWith('Bearer') ? req.headers.authorization.split(' ')[1] : null;
+  token = req.cookies.token ;
 
   // If no token, return unauthorized
   if (!token) {

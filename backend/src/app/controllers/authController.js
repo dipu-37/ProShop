@@ -1,8 +1,8 @@
 
 // auth controller
-import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
+import asyncHandler from "../middleware/asyncHandler.js";
 
 
 // @desc    Auth user & get token

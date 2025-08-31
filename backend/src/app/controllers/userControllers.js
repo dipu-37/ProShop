@@ -1,10 +1,11 @@
 
-import User from "../models/userModel";
-
+import User from "../models/userModel.js";
+import asyncHandler from "../middleware/asyncHandler.js";
 // @desc    Get user profile
 // @route   GET /api/users/profile
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
+  console.log(req.user);
   const user = await User.findById(req.user._id);
   res.json(user);
 });
