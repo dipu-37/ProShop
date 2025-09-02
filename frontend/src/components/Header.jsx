@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import {userLoginMutation} from "../features/userApiSlice";
+import {useLogoutMutation} from "../features/userApiSlice";
 import { logout } from "../features/authSlice";
 
 
@@ -16,10 +16,11 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [logoutApiCall] = userLoginMutation();
+  const [logoutApiCall] = useLogoutMutation();
 
   const handleLogout = async () => {
     try {
+      console.log("Logging out...");
       await logoutApiCall().unwrap();
       dispatch(logout());
       navigate("/");
@@ -120,7 +121,7 @@ const Header = () => {
                 <Link to="/profile">Profile</Link>
               </li>
               <li>
-                <button>Logout</button>
+                <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
           </div>

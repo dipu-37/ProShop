@@ -43,7 +43,7 @@ const SignInPage = () => {
 
   return (
     <FormContainer>
-      <h1 className="text-3xl font-bold mb-6 text-center mt-12">Sign In</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center ">Sign In</h1>
 
       <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
         {/* Email */}
@@ -58,7 +58,7 @@ const SignInPage = () => {
               required: "Email is required",
               pattern: { value: /^\S+@\S+$/i, message: "Invalid email" },
             })}
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
           />
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -77,7 +77,7 @@ const SignInPage = () => {
               required: "Password is required",
               minLength: { value: 6, message: "Minimum 6 characters" },
             })}
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
           />
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
