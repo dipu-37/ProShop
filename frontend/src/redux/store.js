@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { baseApi } from "../api/baseApi.js"
 import cartSliceReducer from "../features/cartSlice.js"
-
+import authSliceReducer from "../features/authSlice.js"
 
 
 export const store = configureStore({
@@ -9,6 +9,7 @@ export const store = configureStore({
     // Add your reducers here
     [baseApi.reducerPath]: baseApi.reducer,
     cart : cartSliceReducer,
+    auth : authSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),

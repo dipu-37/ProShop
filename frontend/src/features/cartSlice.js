@@ -22,7 +22,6 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       // note : we don't need to user,rating , numReview or reviews
       const item = action.payload;
-      console.log("Item to add:", item);
       const existingItem = state.cartItem.find((i) => i._id === item._id);
       if (existingItem) {
         state.cartItem = state.cartItem.map((i) =>

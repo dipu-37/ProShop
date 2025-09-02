@@ -1,14 +1,32 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {userLoginMutation} from "../features/userApiSlice";
+import { logout } from "../features/authSlice";
+
+
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // access the cart state
   const cart = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [logoutApiCall] = userLoginMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to logout:", error);
+    }
+  };
 
   return (
     <div className="bg-slate-700 text-white px-6 py-4 md:flex md:items-center md:justify-between">

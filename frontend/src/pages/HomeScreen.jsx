@@ -1,5 +1,5 @@
 import Cart from "../components/Cart";
-import Loading from "../components/Loding.jsx";
+import Loading from "../components/Loading.jsx";
 // import { useState } from "react";
 // import { useEffect } from "react";
 // import baseUrl from "../api/axiosInstance";

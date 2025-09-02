@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
-
+import {ToastContainer} from 'react-toastify';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         </main>
       </div>
       <Footer className="absolute bottom-0 left-0 w-full" />
+      <ToastContainer position="top-right"/>
     </div>
   );
 }
