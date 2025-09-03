@@ -10,9 +10,9 @@ const CartPage = () => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart) || {};
-  console.log("Cart state:", cart);
+  //console.log("Cart state:", cart);
   const { cartItem } = cart;
-  console.log("Cart Items:", cartItem);
+  //console.log("Cart Items:", cartItem);
 
   const { control } = useForm();
 

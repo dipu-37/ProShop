@@ -2,23 +2,20 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../features/cartSlice";
-import FormContainer from "../components/FormContainer";
-export default function ShoppingPage() {
+
+const ShippingPage = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart || {};
 
   const [address, setAddress] = useState(shippingAddress?.address || "");
   const [city, setCity] = useState(shippingAddress?.city || "");
-  const [postalCode, setPostalCode] = useState(
-    shippingAddress?.postalCode || ""
-  );
+  const [postalCode, setPostalCode] = useState(shippingAddress?.postalCode || "");
   const [country, setCountry] = useState(shippingAddress?.country || "");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
-    console.log("submitHandler", { address, city, postalCode, country });
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate("/payment");
@@ -26,18 +23,11 @@ export default function ShoppingPage() {
 
   return (
     <div>
-      {/*  rounded-md border border-gray-200 shadow-sm */}
       <div className="max-w-md mx-auto p-6 bg-white ">
-        <h1 className="text-3xl font-semibold mb-5 text-gray-800 ">Shipping</h1>
-
-        <form onSubmit={submitHandler} className="space-y-4">
+        <h1 className="text-3xl font-semibold mb-5 text-gray-800">Shipping</h1>
+        <form onSubmit={submitHandler} className="space-y-4 max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded">
           <div>
-            <label
-              htmlFor="address"
-              className="block text-gray-700 text-sm font-medium mb-1"
-            >
-              Address
-            </label>
+            <label htmlFor="address" className="block text-gray-700 text-sm font-medium mb-1">Address</label>
             <input
               id="address"
               type="text"
@@ -50,12 +40,7 @@ export default function ShoppingPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="city"
-              className="block text-gray-700 text-sm font-medium mb-1"
-            >
-              City
-            </label>
+            <label htmlFor="city" className="block text-gray-700 text-sm font-medium mb-1">City</label>
             <input
               id="city"
               type="text"
@@ -68,12 +53,7 @@ export default function ShoppingPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="postalCode"
-              className="block text-gray-700 text-sm font-medium mb-1"
-            >
-              Postal Code
-            </label>
+            <label htmlFor="postalCode" className="block text-gray-700 text-sm font-medium mb-1">Postal Code</label>
             <input
               id="postalCode"
               type="text"
@@ -86,12 +66,7 @@ export default function ShoppingPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="country"
-              className="block text-gray-700 text-sm font-medium mb-1"
-            >
-              Country
-            </label>
+            <label htmlFor="country" className="block text-gray-700 text-sm font-medium mb-1">Country</label>
             <input
               id="country"
               type="text"
@@ -105,7 +80,7 @@ export default function ShoppingPage() {
 
           <button
             type="submit"
-            className="w-1/4 py-1 px-4 bg-gray-800 text-white font-medium rounded hover:bg-gray-900 transition"
+            className="w-full py-2 px-4 bg-gray-800 text-white font-medium rounded hover:bg-gray-900 transition"
           >
             Continue
           </button>
@@ -113,4 +88,6 @@ export default function ShoppingPage() {
       </div>
     </div>
   );
-}
+};
+
+export default ShippingPage;

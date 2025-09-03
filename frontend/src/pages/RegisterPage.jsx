@@ -54,7 +54,7 @@ const RegisterPage = () => {
   return (
     <div className="flex justify-center items-center ">
       <div className="w-full max-w-md  shadow-lg rounded-2xl p-6">
-        <h1 className="text-3xl font-bold mb-3 text-center">Register</h1>
+        <h1 className="text-3xl font-bold mb-4 ">Register</h1>
 
         <form onSubmit={handleSubmit(submitHandler)} className="space-y-2 ">
           {/* Name */}
@@ -149,7 +149,7 @@ const RegisterPage = () => {
             disabled={isLoading}
             className="w-full bg-gray-500 text-white p-2 rounded-lg hover:bg-gray-600 transition disabled:opacity-50"
           >
-            {isLoading ? <Loading /> : "Register"}
+            {"Register"}
           </button>
         </form>
 

@@ -1,4 +1,4 @@
-import Cart from "../components/Cart";
+import Cart from "../components/Cart.jsx";
 import Loading from "../components/Loading.jsx";
 // import { useState } from "react";
 // import { useEffect } from "react";
