@@ -16,10 +16,14 @@ const PlaceOrderPage = () => {
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
-  useEffect(() => {
-    if (!cart.shippingAddress.address) navigate('/shipping');
-    else if (!cart.paymentMethod) navigate('/payment');
-  }, [cart.paymentMethod, cart.shippingAddress.address, navigate]);
+useEffect(() => {
+  if (!cart.shippingAddress || !cart.shippingAddress.address) {
+    navigate('/shipping');
+  } else if (!cart.paymentMethod) {
+    navigate('/payment');
+  }
+}, [cart.paymentMethod, cart.shippingAddress, navigate]);
+
 
   const placeOrderHandler = async () => {
     try {
@@ -70,7 +74,7 @@ const PlaceOrderPage = () => {
           <div className="border border-gray-200 p-4 rounded">
             <h2 className="text-xl font-semibold mb-2">Order Items</h2>
             {cart?.cartItem?.length === 0 ? (
-              <Message>Your cart is empty</Message>
+              <Message variant="warning">Your cart is empty</Message>
             ) : (
               <div className="space-y-2">
                 {cart?.cartItem?.map((item, index) => (

@@ -9,7 +9,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
-  : { cartItem: [] , shippingAddress: {}, paymentMethod: 'PayPal' };
+  : { cartItem: [], shippingAddress: {}, paymentMethod: "PayPal" };
 
 const addDecimal = (num) => {
   return Math.round((num * 100) / 100).toFixed(2);
@@ -67,10 +67,23 @@ const cartSlice = createSlice({
       state.cartItem = [];
       localStorage.setItem("cart", JSON.stringify(state));
     },
+    // NOTE: here we need to reset state for when a user logs out so the next
+    // user doesn't inherit the previous users cart and shipping
+    resetCart: () => {
+      localStorage.removeItem("cart");
+      return { cartItem: [], shippingAddress: {}, paymentMethod: "PayPal" };
+    },
   },
 });
 
-export const { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, clearCartItems } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  saveShippingAddress,
+  savePaymentMethod,
+  clearCartItems,
+  resetCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;
 
 // state = {

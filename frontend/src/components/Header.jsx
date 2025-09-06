@@ -5,6 +5,7 @@ import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import {useLogoutMutation} from "../features/userApiSlice";
 import { logout } from "../features/authSlice";
+import { resetCart } from "../features/cartSlice";
 
 
 
@@ -13,6 +14,7 @@ const Header = () => {
 
   // access the cart state
   const cart = useSelector((state) => state.cart);
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const Header = () => {
       console.log("Logging out...");
       await logoutApiCall().unwrap();
       dispatch(logout());
+      dispatch(resetCart());
       navigate("/");
     } catch (error) {
       console.error("Failed to logout:", error);

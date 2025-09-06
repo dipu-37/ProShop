@@ -1,3 +1,4 @@
+
 import {baseApi} from "../api/baseApi.js";
 
 export const orderApiSlice = baseApi.injectEndpoints({
@@ -9,13 +10,18 @@ export const orderApiSlice = baseApi.injectEndpoints({
                 body: {...order}
             })
         }),
-
-        //
+        getOrderDetails: builder.query({
+            query: (id) => ({
+                url: `/orders/${id}`,
+            }),
+            keepUnusedDataFor: 5,
+        })
     })
 });
 
 export const {
     useCreateOrderMutation,
+    useGetOrderDetailsQuery
    
 } = orderApiSlice;
   

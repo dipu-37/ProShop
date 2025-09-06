@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import { useState } from "react";
 
-const ProductScreenUI = () => {
+const ProductDetailsPage = () => {
   const { id: productId } = useParams();
   const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
 
@@ -105,7 +105,7 @@ const ProductScreenUI = () => {
   );
 };
 
-export default ProductScreenUI;
+export default ProductDetailsPage;
 
 
 
