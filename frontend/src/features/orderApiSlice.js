@@ -1,10 +1,10 @@
-import {apiSlice} from "../../app/api/apiSlice";
+import {baseApi} from "../api/baseApi.js";
 
-export const orderApiSlice = apiSlice.injectEndpoints({
+export const orderApiSlice = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        addOrderItems: builder.mutation({
+        createOrder: builder.mutation({
             query: (order) => ({
-                url: '/api/orders',
+                url: '/orders',
                 method: 'POST',
                 body: {...order}
             })
@@ -15,7 +15,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-    useAddOrderItemsMutation,
+    useCreateOrderMutation,
    
 } = orderApiSlice;
   
