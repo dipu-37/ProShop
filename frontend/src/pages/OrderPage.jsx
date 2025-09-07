@@ -2,9 +2,10 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import { useGetOrderDetailsQuery } from "../features/orderApiSlice";
+import { useGetOrderDetailsQuery, useGetPaypalClientIdQuery, usePayOrderMutation } from "../features/orderApiSlice";
+import { useEffect } from 'react';
 
-const OrderScreen = () => {
+const OrderPage = () => {
   const { id: orderId } = useParams();
 
   const {
@@ -13,7 +14,37 @@ const OrderScreen = () => {
     error,
   } = useGetOrderDetailsQuery(orderId);
 
-  const { userInfo } = useSelector((state) => state.auth);
+    const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+  const {userInfo} = useSelector((state)=>state.auth);
+
+   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  const {
+    data: paypal,
+    isLoading: loadingPayPal,
+    error: errorPayPal,
+  } = useGetPaypalClientIdQuery();
+
+
+   useEffect(() => {
+    if (!errorPayPal && !loadingPayPal && paypal.clientId) {
+      const loadPaypalScript = async () => {
+        paypalDispatch({
+          type: 'resetOptions',
+          value: {
+            'client-id': paypal.clientId,
+            currency: 'USD',
+          },
+        });
+        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+      };
+      if (order && !order.isPaid) {
+        if (!window.paypal) {
+          loadPaypalScript();
+        }
+      }
+    }
+  }, [errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
 
   if (isLoading) return <Loading />;
   if (error)
@@ -138,4 +169,4 @@ const OrderScreen = () => {
   );
 };
 
-export default OrderScreen;
+export default OrderPage;
