@@ -27,7 +27,7 @@ const ShippingPage = () => {
   };
 
   return (
-    <div className="w-2/3 mx-auto mt-10 p-6 bg-white shadow-md rounded">
+    <div className=" w-2/3 -m-4 mx-auto mt-10 p-4 bg-white shadow-md rounded">
       <h1 className="text-3xl font-semibold mb-6 text-gray-800">Shipping</h1>
       <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
         

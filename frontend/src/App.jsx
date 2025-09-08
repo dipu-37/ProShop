@@ -8,7 +8,7 @@ function App() {
     <div className="min-h-screen flex flex-col"> 
       <Header />
       <div className='relative flex-grow'>
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 pb-20">
+        <main className="mx-auto max-w-7xl  py-6 pb-20">
           <Outlet />
         </main>
       </div>
@@ -19,3 +19,5 @@ function App() {
 }
 
 export default App;
+
+// px-4 sm:px-6 lg:px-8
