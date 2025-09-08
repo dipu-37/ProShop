@@ -30,7 +30,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-slate-700 text-white px-4 md:px-6 py-4 md:flex md:items-center md:justify-between">
+    <header className="bg-slate-700 text-white  md:px-6 py-4 md:flex md:items-center md:justify-between px-4 sm:px-6 lg:px-8">
       {/* Left: Logo + Hamburger */}
       <div className="flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">
