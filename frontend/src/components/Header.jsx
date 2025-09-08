@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../features/userApiSlice";
 import { logout } from "../features/authSlice";
 import { resetCart } from "../features/cartSlice";
+import { IoIosArrowDropdown } from "react-icons/io";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -84,7 +85,7 @@ const Header = () => {
                 tabIndex={0}
                 className="cursor-pointer flex items-center gap-1 btn btn-ghost hover:bg-gray-600 border-white"
               >
-                Admin <IoMdArrowDropdown />
+                Admin <IoIosArrowDropdown />
               </button>
               <ul
                 tabIndex={0}

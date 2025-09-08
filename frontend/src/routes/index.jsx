@@ -11,6 +11,8 @@ import PlaceOrderPage from "../pages/placeOrderPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage";
 import CartPage from "../pages/CartPage";
 import OrderPage from "../pages/OrderPage";
+import ProfilePage from "../pages/ProfilePage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -65,6 +67,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
            <OrderPage></OrderPage>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+          <ProfilePage></ProfilePage>
           </PrivateRoute>
         ),
       },
