@@ -8,7 +8,7 @@ function App() {
     <div className="min-h-screen flex flex-col"> 
       <Header />
       <div className='relative flex-grow'>
-        <main className="mx-auto max-w-7xl  py-6 pb-20">
+        <main className="mx-auto max-w-7xl  py-6 pb-20 h-fit">
           <Outlet />
         </main>
       </div>

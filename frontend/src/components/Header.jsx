@@ -3,18 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import {useLogoutMutation} from "../features/userApiSlice";
+import { useLogoutMutation } from "../features/userApiSlice";
 import { logout } from "../features/authSlice";
 import { resetCart } from "../features/cartSlice";
-
-
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // access the cart state
   const cart = useSelector((state) => state.cart);
-  
+  const { userInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,7 +19,6 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("Logging out...");
       await logoutApiCall().unwrap();
       dispatch(logout());
       dispatch(resetCart());
@@ -33,14 +29,12 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-slate-700 text-white px-6 py-4 md:flex md:items-center md:justify-between">
-      {/* Left - Logo */}
+    <header className="bg-slate-700 text-white px-4 md:px-6 py-4 md:flex md:items-center md:justify-between">
+      {/* Left: Logo + Hamburger */}
       <div className="flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">
           ProShop
         </Link>
-
-        {/* Hamburger for Mobile */}
         <button
           className="md:hidden text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -53,9 +47,9 @@ const Header = () => {
       <div
         className={`${
           menuOpen ? "block" : "hidden"
-        } md:flex md:items-center md:justify-between md:flex-row-reverse mt-2 md:mt-0 gap-4`}
+        } md:flex md:items-center md:flex-row-reverse mt-2 md:mt-0 gap-4`}
       >
-        {/* Right side dropdowns */}
+        {/* Right side: Cart + Admin + User */}
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
           {/* Cart */}
           <Link
@@ -81,66 +75,92 @@ const Header = () => {
                 {cart?.cartItem?.reduce((acc, item) => acc + item.qty, 0)}
               </span>
             </div>
-           
           </Link>
 
           {/* Admin Dropdown */}
-          <div className="dropdown dropdown-end">
-            <button
-              tabIndex={0}
-              className="cursor-pointer flex items-center gap-1"
-            >
-              Admin <IoMdArrowDropdown />
-            </button>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-white text-black rounded-box w-40"
-            >
-              <li>
-                <Link to="/admin/products">Products</Link>
-              </li>
-              <li>
-                <Link to="/admin/orders">Orders</Link>
-              </li>
-              <li>
-                <Link to="/admin/users">Users</Link>
-              </li>
-            </ul>
-          </div>
+          {userInfo?.isAdmin && (
+            <div className="relative dropdown">
+              <button
+                tabIndex={0}
+                className="cursor-pointer flex items-center gap-1 btn btn-ghost hover:bg-gray-600 border-white"
+              >
+                Admin <IoMdArrowDropdown />
+              </button>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content absolute bottom-full left-0 mb-2 sm:top-full sm:bottom-auto sm:left-auto bg-white text-black rounded-box shadow z-50 w-40"
+              >
+                <li>
+                  <Link to="/admin/products">Products</Link>
+                </li>
+                <li>
+                  <Link to="/admin/orders">Orders</Link>
+                </li>
+                <li>
+                  <Link to="/admin/users">Users</Link>
+                </li>
+              </ul>
+            </div>
+          )}
 
-          {/* User Dropdown */}
-          <div className="dropdown dropdown-end">
-            <button
-              tabIndex={0}
-              className="cursor-pointer flex items-center gap-1"
-            >
-              User <IoMdArrowDropdown />
-            </button>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-white text-black rounded-box w-40"
-            >
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <button onClick={handleLogout}>Logout</button>
-              </li>
-            </ul>
+          {/* User Avatar Dropdown */}
+          <div className="relative dropdown">
+           
+
+            {/* User Dropdown / Login */}
+            {userInfo ? (
+              <div className="relative dropdown">
+                {/* Avatar button */}
+                <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      src={
+                        userInfo.avatar ||
+                        "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      }
+                      alt={userInfo.name}
+                    />
+                  </div>
+                </div>
+
+                {/* Dropdown menu */}
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content absolute bottom-full mb-2 sm:top-full sm:bottom-auto lg:right-0 sm:left-auto
+                 bg-white text-gray-500 rounded-box shadow z-50 w-full sm:w-48 max-w-xs"
+                >
+                  <li>
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/settings">Settings</Link>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout}>Logout</button>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/login" className="btn btn-outline  border-e-white  text-white hover:bg-gray-500">
+                Login
+              </Link>
+            )}
           </div>
         </div>
 
-        {/* Search */}
-        <div className="flex gap-2 mb-2 md:mb-0">
+        {/* Search Bar */}
+        <div className="flex gap-2 mt-2 md:mt-0 mb-2 md:mb-0">
           <input
             type="text"
             placeholder="Search Products..."
-            className="input input-bordered w-40 md:w-64 text-black"
+            className="input input-bordered w-full md:w-64 text-black"
           />
-          <button className="btn btn-outline btn-success">Search</button>
+          {/* <button className="btn btn-outline  border-e-white  text-white hover:bg-gray-500">
+            Search
+          </button> */}
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

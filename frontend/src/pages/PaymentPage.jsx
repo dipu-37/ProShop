@@ -25,7 +25,7 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded">
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded px-4 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-semibold mb-6 text-gray-800">Payment Method</h1>
       <form onSubmit={submitHandler} className="space-y-4">
         <fieldset className="border border-gray-300 rounded p-4">

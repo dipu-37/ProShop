@@ -49,7 +49,7 @@ useEffect(() => {
   return (
     <>
       {/* <CheckoutSteps step1 step2 step3 step4 /> */}
-      <div className="flex flex-col md:flex-row gap-6 mt-6">
+      <div className="flex flex-col md:flex-row gap-6 mt-6 px-4 sm:px-6 lg:px-8">
         {/* Left Section */}
         <div className="md:w-2/3 space-y-4">
           {/* Shipping */}

@@ -30,8 +30,8 @@ const CartPage = () => {
 
   return (
     <div>
-      <h2 className="text-3xl font-semibold mb-4">Shopping Cart</h2>
-      <div className="max-w-7xl mx-auto md:flex gap-6">
+      <h2 className="text-3xl font-semibold mb-4 px-4 sm:px-6 lg:px-8">Shopping Cart</h2>
+      <div className="max-w-7xl mx-auto md:flex gap-6 px-4 sm:px-6 lg:px-8">
         {/* Left - Cart Items */}
         <div className="md:w-2/3">
           {cartItem.length === 0 ? (
