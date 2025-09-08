@@ -5,7 +5,7 @@ import Loading from "../components/Loading.jsx";
 // import baseUrl from "../api/axiosInstance";
 import { useGetProductsQuery } from "../features/productApiSlice.js";
 
-const HomeScreen = () => {
+const HomePage = () => {
 
   // const [products,setProducts] = useState([]);
   // useEffect(()=>{
@@ -36,7 +36,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default HomePage;
 
 
 

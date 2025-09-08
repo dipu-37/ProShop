@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom';
 
-const AdminRoute = () => {
+const AdminPrivateRoute = () => {
 
     const {userInfo} = useSelector((state)=>state.auth);
 
@@ -13,4 +13,4 @@ const AdminRoute = () => {
     );
 }
 
-export default AdminRoute
+export default AdminPrivateRoute
