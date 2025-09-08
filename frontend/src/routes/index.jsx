@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       // Public routes
-      { path: "/", element: <HomePage /> },
+      {index:true, path: "/", element: <HomePage /> },
       { path: "product/:id", element: <ProductDetailsPage /> },
       { path: "cart", element: <CartPage /> },
       { path: "login", element: <SignInPage /> },

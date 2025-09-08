@@ -9,6 +9,11 @@ export const orderApiSlice = baseApi.injectEndpoints({
         body: { ...order },
       }),
     }),
+    getOrders : builder.query({
+     query : ()=>({
+      url : `/orders`,
+     })
+    }),
     getOrderDetails: builder.query({
       query: (id) => ({
         url: `/orders/${id}`,
@@ -38,5 +43,5 @@ export const orderApiSlice = baseApi.injectEndpoints({
 });
 
 export const { useCreateOrderMutation, useGetOrderDetailsQuery , usePayOrderMutation,
-  useGetPaypalClientIdQuery,useGetMyOrderQuery} =
+  useGetPaypalClientIdQuery,useGetMyOrderQuery,useGetOrdersQuery} =
   orderApiSlice;
