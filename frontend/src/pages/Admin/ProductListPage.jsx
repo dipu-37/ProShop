@@ -1,19 +1,35 @@
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useGetProductsQuery } from "../../features/productApiSlice";
+import { useCreateProductMutation, useGetProductsQuery } from "../../features/productApiSlice";
 import Loading from "../../components/Loading";
 import Message from "../../components/Message";
 import { IoCreateOutline } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { toast } from "react-toastify";
+
 const ProductListPage = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const [createProduct] = useCreateProductMutation();
+const { data: products,isLoading,error, refetch } = useGetProductsQuery();
+
+const createProductHandler = async () => {
+  if (window.confirm("Are you sure you want to create a new product?")) {
+    try {
+      const newProduct = await createProduct().unwrap(); // POST request sent
+      refetch(); 
+      toast.success(`Product "${newProduct.name}" created!`);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  }
+};
+
 
   return (
     <div className="p-4">
       {/* Header + Create Button */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <h1 className="text-3xl font-bold mb-4 sm:mb-0">Products</h1>
-        <button className="flex items-center bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded shadow transition duration-200">
+        <button onClick={createProductHandler} className="flex items-center bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded shadow transition duration-200">
           <IoCreateOutline />
             Create Product
         </button>
