@@ -6,6 +6,7 @@ import {
   useGetOrderDetailsQuery,
   useGetPaypalClientIdQuery,
   usePayOrderMutation,
+  useUpdateOrderToDeliveredMutation,
 } from "../features/orderApiSlice";
 import { useEffect } from "react";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
@@ -27,6 +28,7 @@ const OrderPage = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  const [updateOrderToDelivered] = useUpdateOrderToDeliveredMutation();
   const {
     data: paypal,
     isLoading: loadingPayPal,
@@ -87,6 +89,16 @@ const OrderPage = () => {
   function onError(err) {
     toast.error(err.message);
   }
+
+  const deliveredOrderHandler = async () => {
+    try {
+      await updateOrderToDelivered(orderId).unwrap();
+      refetch();
+      toast.success("Order delivered")
+    } catch (err) {
+      toast.error(err?.data?.Message || err.message);
+    }
+  };
 
   if (isLoading) return <Loading />;
   if (error)
@@ -231,7 +243,10 @@ const OrderPage = () => {
 
             {/* Admin Deliver */}
             {userInfo?.isAdmin && order.isPaid && !order.isDelivered && (
-              <button className="w-full mt-3 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+              <button
+                onClick={deliveredOrderHandler}
+                className="w-full mt-3 py-2 px-4 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
+              >
                 Mark As Delivered
               </button>
             )}

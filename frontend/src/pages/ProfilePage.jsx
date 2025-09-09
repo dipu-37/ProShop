@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { useGetMyOrderQuery } from "../features/orderApiSlice";
-import {useProfileMutation} from "../features/userApiSlice"
+import { useProfileMutation } from "../features/userApiSlice";
 import { setCredentials } from "../features/authSlice";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
@@ -14,16 +14,15 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
 
-  const { data: orders, isLoading, error,refetch} = useGetMyOrderQuery();
+  const { data: orders, isLoading, error, refetch } = useGetMyOrderQuery();
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
-    useProfileMutation()
+    useProfileMutation();
 
   const {
     register,
     handleSubmit,
     setValue, // default data set
     formState: { errors },
-    refresh,
   } = useForm();
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const ProfilePage = () => {
       setValue("name", userInfo.name);
       setValue("email", userInfo.email);
     }
-  }, [userInfo, setValue,]);
+  }, [userInfo, setValue]);
 
   const submitHandler = async (data) => {
     if (data.password !== data.confirmPassword) {
@@ -47,7 +46,6 @@ const ProfilePage = () => {
       dispatch(setCredentials({ ...res }));
       toast.success("Profile updated successfully");
       refetch();
-      refresh();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -70,9 +68,7 @@ const ProfilePage = () => {
               className="w-full px-3 py-2 border rounded-lg focus:ring focus:ring-blue-300"
             />
             {errors.name && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.name.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
             )}
           </div>
 
@@ -139,7 +135,7 @@ const ProfilePage = () => {
                   <th className="px-4 py-2">TOTAL</th>
                   <th className="px-4 py-2">PAID</th>
                   <th className="px-4 py-2">DELIVERED</th>
-                  <th className="px-4 py-2"> DETAILS</th>
+                  <th className="px-4 py-2"></th>
                 </tr>
               </thead>
               <tbody>
