@@ -14,6 +14,7 @@ import OrderListPage from "../pages/Admin/OrderListPage";
 import PrivateRoute from "./PrivateRoute";
 import AdminPrivateRoute from "./AdminPrivateRoute";
 import HomePage from "../pages/HomePage.";
+import ProductListPage from "../pages/Admin/ProductListPage";
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +45,9 @@ export const router = createBrowserRouter([
       {
         path: "/admin",
         element: <AdminPrivateRoute />, // wrapper
-        children: [{ path: "orders", element: <OrderListPage /> }],
+        children: [{ path: "orders", element: <OrderListPage /> },
+          {path:'products',element:<ProductListPage></ProductListPage>}
+        ],
       },
     ],
   },
