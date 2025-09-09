@@ -1,3 +1,4 @@
+import { IoBody } from "react-icons/io5";
 import { baseApi } from "../api/baseApi";
 
 export const productApiSlice = baseApi.injectEndpoints({
@@ -5,7 +6,7 @@ export const productApiSlice = baseApi.injectEndpoints({
     getProducts: builder.query({
       query: () => "/products",
     }),
-    getProductById: builder.query({
+    GetProductDetails: builder.query({
       query: (id) => `/products/${id}`,
     }),
     createProduct: builder.mutation({
@@ -15,11 +16,19 @@ export const productApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Product"],
     }),
+    updateProduct:builder.mutation({
+      query : (productId,data)=>({
+        url : ``,
+        method :'PUT',
+        body : data
+      })
+    })
   }),
 });
 
 export const {
   useGetProductsQuery,
-  useGetProductByIdQuery,
+ useGetProductDetailsQuery,
   useCreateProductMutation,
+  useUpdateProductMutation
 } = productApiSlice;

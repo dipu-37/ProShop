@@ -1,13 +1,13 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Rating } from "../components/Rating";
-import { useGetProductByIdQuery } from "../features/productApiSlice";
+import { useGetProductDetailsQuery } from "../features/productApiSlice";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import { useState } from "react";
 
 const ProductDetailsPage = () => {
   const { id: productId } = useParams();
-  const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
+  const { data: product, isLoading, error } = useGetProductDetailsQuery(productId);
 
   const dispatch = useDispatch();
   const [qty, setQty] = useState(1); // qty state
