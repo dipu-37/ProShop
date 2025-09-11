@@ -1,6 +1,10 @@
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useCreateProductMutation, useGetProductsQuery } from "../../features/productApiSlice";
+import {
+  useCreateProductMutation,
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "../../features/productApiSlice";
 import Loading from "../../components/Loading";
 import Message from "../../components/Message";
 import { IoCreateOutline } from "react-icons/io5";
@@ -9,29 +13,45 @@ import { toast } from "react-toastify";
 
 const ProductListPage = () => {
   const [createProduct] = useCreateProductMutation();
-const { data: products,isLoading,error, refetch } = useGetProductsQuery();
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const [deleteProduct]=useDeleteProductMutation();
 
-const createProductHandler = async () => {
-  if (window.confirm("Are you sure you want to create a new product?")) {
-    try {
-      const newProduct = await createProduct().unwrap(); // POST request sent
-      refetch(); 
-      toast.success(`Product "${newProduct.name}" created!`);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+  const createProductHandler = async () => {
+    if (window.confirm("Are you sure you want to create a new product?")) {
+      try {
+        const newProduct = await createProduct().unwrap(); // POST request sent
+        refetch();
+        toast.success(`Product "${newProduct.name}" created!`);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
     }
-  }
-};
+  };
 
+  const deleteProductHandler = async(productId) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        // 
+        await deleteProduct(productId);
+        refetch();
+        toast.success(`Product delete successfully!`);
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  };
 
   return (
     <div className="p-4">
       {/* Header + Create Button */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <h1 className="text-3xl font-bold mb-4 sm:mb-0">Products</h1>
-        <button onClick={createProductHandler} className="flex items-center bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded shadow transition duration-200">
+        <button
+          onClick={createProductHandler}
+          className="flex items-center bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded shadow transition duration-200"
+        >
           <IoCreateOutline />
-            Create Product
+          Create Product
         </button>
       </div>
 
@@ -65,16 +85,21 @@ const createProductHandler = async () => {
                   </td>
                   <td className="px-6 py-4 font-medium">{product.name}</td>
                   <td className="px-6 py-4 text-gray-600">${product.price}</td>
-                  <td className="px-6 py-4 text-gray-600">{product.category}</td>
+                  <td className="px-6 py-4 text-gray-600">
+                    {product.category}
+                  </td>
                   <td className="px-6 py-4 text-gray-600">{product.brand}</td>
                   <td className="px-6 py-4 flex space-x-2">
                     <Link
                       to={`/admin/product/${product._id}/edit`}
                       className="flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded shadow-sm transition duration-200"
                     >
-                    <FaEdit />
+                      <FaEdit />
                     </Link>
-                    <button className="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition duration-200">
+                    <button
+                      onClick={() => deleteProductHandler(product._id)}
+                      className="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow-sm transition duration-200"
+                    >
                       <RiDeleteBinLine />
                     </button>
                   </td>

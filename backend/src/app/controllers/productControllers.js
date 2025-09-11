@@ -45,17 +45,17 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-  console.log(req.params.id)
+  console.log(req.params.id);
   console.log(req.file);
   const payload = JSON.parse(req.body.data);
   console.log(payload);
 
   const product = await Product.findById(req.params.id);
 
-  if(req.file){
-    const imageName = `${payload.name}`
+  if (req.file) {
+    const imageName = `${payload.name}`;
     const path = req.file?.path;
-    const {secure_url} = await sendImageToCloudinary(imageName,path);
+    const { secure_url } = await sendImageToCloudinary(imageName, path);
     payload.image = secure_url;
   }
 
@@ -77,9 +77,22 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 });
 
-const deleteProductById = asyncHandler(async (req, res) => {
+const deleteProduct = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const product = await Product.deleteProductById(id);
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    const product = await Product.deleteOne({_id:id});
+    res.send("Product delete successfully");
+  } else {
+    res.status(404);
+    throw new Error("Product not fount");
+  }
 });
 
-export { getProducts, getProductById, createProduct, updateProduct };
+export {
+  getProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+};

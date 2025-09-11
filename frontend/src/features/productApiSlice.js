@@ -1,11 +1,10 @@
-import { IoBody } from "react-icons/io5";
 import { baseApi } from "../api/baseApi";
 
 export const productApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: () => "/products",
-       providesTags: ['Product'],
+      providesTags: ["Product"],
     }),
     GetProductDetails: builder.query({
       query: (id) => `/products/${id}`,
@@ -26,7 +25,14 @@ export const productApiSlice = baseApi.injectEndpoints({
         //   "Content-Type": "application/json",
         // },
       }),
-      invalidatesTags: ["Product"]
+      invalidatesTags: ["Product"],
+    }),
+    deleteProduct: builder.mutation({
+      query: (productId) => ({
+        url: `/products/${productId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Product"],
     }),
   }),
 });
@@ -36,4 +42,5 @@ export const {
   useGetProductDetailsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
+  useDeleteProductMutation,
 } = productApiSlice;
