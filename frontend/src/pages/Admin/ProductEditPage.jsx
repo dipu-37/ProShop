@@ -46,7 +46,13 @@ const ProductEditPage = () => {
 
   const submitHandler = async (data) => {
     try {
-      await updateProduct({ productId, ...data }).unwrap();
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      if (data.file && data.file[0]) {
+        formData.append("file", data.file[0]);
+      }
+
+      await updateProduct({ productId,formData }).unwrap();
       toast.success("Product updated");
       refetch();
       navigate("/admin/products");
@@ -54,18 +60,6 @@ const ProductEditPage = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
-
-  //   const uploadFileHandler = async (e) => {
-  //     const formData = new FormData();
-  //     formData.append("image", e.target.files[0]);
-  //     try {
-  //       const res = await uploadProductImage(formData).unwrap();
-  //       setValue("image", res.image);
-  //       toast.success(res.message);
-  //     } catch (err) {
-  //       toast.error(err?.data?.message || err.error);
-  //     }
-  //   };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -133,6 +127,7 @@ const ProductEditPage = () => {
                 />
                 <input
                   type="file"
+                   {...register("file")}
                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
                 />
 

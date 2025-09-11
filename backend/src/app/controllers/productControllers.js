@@ -45,7 +45,7 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-
+  console.log(req.params.id)
   console.log(req.file);
   const payload = JSON.parse(req.body.data);
   console.log(payload);

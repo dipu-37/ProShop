@@ -18,13 +18,13 @@ export const productApiSlice = baseApi.injectEndpoints({
       invalidatesTags: ["Product"],
     }),
     updateProduct: builder.mutation({
-      query: ({ productId, data }) => ({
+      query: ({ productId, formData }) => ({
         url: `/products/${productId}`,
         method: "POST",
-        body: data,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: formData,
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
       }),
       invalidatesTags: ["Product"]
     }),

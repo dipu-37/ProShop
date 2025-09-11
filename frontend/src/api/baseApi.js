@@ -5,7 +5,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: `${import.meta.env.VITE_API_URL}/api`,
   credentials: "include",
   prepareHeaders :(headers)=>{
-    headers.set("Content-Type","application/json");
+  //  headers.set("Content-Type","application/json");
     return headers
   }
 });
