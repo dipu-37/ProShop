@@ -42,9 +42,14 @@ const deleteUser = asyncHandler(async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-
-  await user.remove();
-  res.json({ message: "User removed" });
+  if(user){
+    if(user.isAdmin){
+      res.status(400);
+      throw new Error("Cannot delete admin User!");
+    }
+  }
+  await User.deleteOne({_id:user._id})
+  res.status(200).json({ message: "User delete successfully" });
 });
 
 // @desc    Get all users
@@ -53,6 +58,9 @@ const deleteUser = asyncHandler(async (req, res) => {
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.json(users);
+  if(!users){
+    throw new Error("users not found")
+  }
 });
 
 // @desc    Get user by ID
@@ -77,12 +85,18 @@ const updateUser = asyncHandler(async (req, res) => {
 
   user.name = req.body.name || user.name;
   user.email = req.body.email || user.email;
+  user.isAdmin = Boolean(req.body.isAdmin)
   if (req.body.password) {
     user.password = req.body.password;
   }
 
-  await user.save();
-  res.json(user);
+  const updateUser = await user.save();
+  res.json({
+   _id:updateUser._id,
+   name:updateUser.name,
+   email:updateUser.email,
+   isAdmin:updateUser.isAdmin,
+  });
 });
 
 export {

@@ -16,6 +16,8 @@ import AdminPrivateRoute from "./AdminPrivateRoute";
 import HomePage from "../pages/HomePage.";
 import ProductListPage from "../pages/Admin/ProductListPage";
 import ProductEditPage from "../pages/Admin/ProductEditPage";
+import UsersListPage from "../pages/Admin/usersListPage";
+import UserEditPage from "../pages/Admin/UserEditPage";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,8 @@ export const router = createBrowserRouter([
         children: [{ path: "orders", element: <OrderListPage /> },
           {path:'products',element:<ProductListPage></ProductListPage>},
           {path:'product/:id/edit',element:<ProductEditPage></ProductEditPage>},
+          {path:'users',element:<UsersListPage></UsersListPage>},
+          {path:'user/:id/edit',element:<UserEditPage></UserEditPage>},
         ],
       },
     ],
