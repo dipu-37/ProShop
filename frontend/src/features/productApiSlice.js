@@ -3,7 +3,12 @@ import { baseApi } from "../api/baseApi";
 export const productApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: () => "/products",
+      query: (pageNumber) =>({
+        url : "/products",
+        params:{
+          pageNumber,
+        }
+      }),
       providesTags: ["Product"],
     }),
     GetProductDetails: builder.query({
@@ -34,7 +39,18 @@ export const productApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Product"],
     }),
+
+    createReview : builder.mutation({
+      query:(data)=>({
+        url: `products/${data.productId}/reviews`,
+        method:'POST',
+        body:data,
+      }),
+      invalidatesTags:['Product']
+    })
   }),
+
+
 });
 
 export const {
@@ -43,4 +59,5 @@ export const {
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useCreateReviewMutation,
 } = productApiSlice;

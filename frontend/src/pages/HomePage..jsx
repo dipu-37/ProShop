@@ -1,12 +1,13 @@
+import { useParams } from "react-router-dom";
 import Cart from "../components/Cart.jsx";
 import Loading from "../components/Loading.jsx";
 // import { useState } from "react";
 // import { useEffect } from "react";
 // import baseUrl from "../api/axiosInstance";
 import { useGetProductsQuery } from "../features/productApiSlice.js";
+import Paginate from "../components/Paginate.jsx";
 
 const HomePage = () => {
-
   // const [products,setProducts] = useState([]);
   // useEffect(()=>{
 
@@ -18,27 +19,32 @@ const HomePage = () => {
   //   fetchProducts();
   // },[])
 
-
   // {isLoading ? () : error ? () : ()}
 
-  const { data: products, isLoading, error } = useGetProductsQuery();
-  console.log(products);
+  const { pageNumber } = useParams();
+  console.log(pageNumber);
+
+  const { data, isLoading, error } = useGetProductsQuery(pageNumber);
+  // console.log(data.products);
 
   if (isLoading) return <Loading></Loading>;
   if (error) return <div>Error loading products</div>;
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 sm:px-6 lg:px-8">
-      {products?.map((product) => (
-        <Cart key={product.id} product={product} />
-      ))}
+    <div>
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 sm:px-6 lg:px-8">
+        {data.products?.map((product) => (
+          <Cart key={product.id} product={product} />
+        ))}
+      </div>
+      <div>
+        <Paginate pages={data.pages} page={data.page}></Paginate>
+      </div>
     </div>
   );
 };
 
 export default HomePage;
-
-
 
 // const items = [];
 // function addItem(text) {
