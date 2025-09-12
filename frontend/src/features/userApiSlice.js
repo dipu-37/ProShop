@@ -23,36 +23,37 @@ export const userApiSlice = baseApi.injectEndpoints({
     }),
     profile: builder.mutation({
       query: (data)=>({
-        url:`users/profile`,
+        url:`/users/profile`,
         method: 'PUT',
         body: data
       })
     }),
     getUser : builder.query({
       query: ()=>({
-        url :`users`
+        url :`/users`
       }),
-      providesTags:['Users'],
+      providesTags:['User'],
       keepUnusedDataFor : 5,
     }),
     deleteUser : builder.mutation({
       query :(userId)=>({
-        url:`users/${userId}`,
+        url:`/users/${userId}`,
         method :`DELETE`
       })
     }),
     getUserDetails :builder.query({
       query :(userId)=>({
-        url:`users/${userId}`
+        url:`/users/${userId}`
       }),
       keepUnusedDataFor : 5,
     }),
     updateUser :builder.mutation({
       query:(data)=>({
-        url: `users/${data.userId}`,
+        url: `/users/${data.userId}`,
         method : 'PUT',
         body : data,
-      })
+      }),
+      invalidatesTags:['User']
     })
 
     

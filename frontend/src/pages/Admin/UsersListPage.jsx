@@ -13,10 +13,10 @@ const UsersListPage = () => {
   const { data: users, refetch, isLoading, error } = useGetUserQuery();
   const [deleteUser] = useDeleteUserMutation();
 
-  const deleteUserHandler = (userId) => {
+  const deleteUserHandler = async (userId) => {
     if (window.confirm("Are you sure?")) {
       try {
-        deleteUser(userId);
+       await deleteUser(userId).unwrap();
         refetch();
         toast.success("user delete successfully");
       } catch (err) {

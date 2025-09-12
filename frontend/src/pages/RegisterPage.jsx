@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useRegisterMutation } from "../features/userApiSlice.js";
 import { setCredentials } from "../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../components/Loading";
 import React from "react";
 
 const RegisterPage = () => {
