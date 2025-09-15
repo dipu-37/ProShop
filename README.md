@@ -1,7 +1,7 @@
 # Project Name
-Short description of your project.
-
-## 🚀 Features
+ProShop eCommerce
+![alt text](image-1.png)
+##  Features
 - Full featured shopping cart
 - Product reviews and ratings
 - Top products carousel
@@ -16,7 +16,7 @@ Short description of your project.
 - PayPal / credit card integration
 - Database seeder (products & users)
 
-## 🛠️ Tech Stack
+##  Tech Stack
 - Frontend: React,Redux Toolkit, Tailwind
 - Backend: Node.js, Express
 - Database: MongoDB,Mongoose
