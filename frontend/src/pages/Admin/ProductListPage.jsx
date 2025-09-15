@@ -1,5 +1,5 @@
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
@@ -10,11 +10,21 @@ import Message from "../../components/Message";
 import { IoCreateOutline } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { toast } from "react-toastify";
+import Paginate from "../../components/Paginate";
 
 const ProductListPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 10;
+  const searchTerm = searchParams.get("searchTerm") || "";
+
   const [createProduct] = useCreateProductMutation();
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
-  const [deleteProduct]=useDeleteProductMutation();
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    page,
+    limit,
+    searchTerm,
+  });
+  const [deleteProduct] = useDeleteProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm("Are you sure you want to create a new product?")) {
@@ -28,10 +38,10 @@ const ProductListPage = () => {
     }
   };
 
-  const deleteProductHandler = async(productId) => {
+  const deleteProductHandler = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        // 
+        //
         await deleteProduct(productId);
         refetch();
         toast.success(`Product delete successfully!`);
@@ -40,6 +50,12 @@ const ProductListPage = () => {
       }
     }
   };
+
+  const handlePageChange = (newPage) => {
+    setSearchParams({ page: newPage, limit, searchTerm });
+  };
+
+ 
 
   return (
     <div className="p-4">
@@ -78,7 +94,7 @@ const ProductListPage = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {products.map((product) => (
+              {data.products.map((product) => (
                 <tr key={product._id} className="hover:bg-gray-50 transition">
                   <td className="px-6 py-4 text-gray-600 truncate max-w-[150px]">
                     {product._id}
@@ -111,7 +127,18 @@ const ProductListPage = () => {
       )}
 
       {/* Pagination Placeholder */}
-      <div className="mt-6 flex justify-center">{/* TODO: Paginate */}</div>
+      <div className="mt-6 flex justify-center">
+        {" "}
+        {data?.meta && (
+          <div className="mt-6">
+            <Paginate
+              pages={data.meta.totalPage}
+              page={data.meta.page}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

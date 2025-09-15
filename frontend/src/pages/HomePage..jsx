@@ -3,6 +3,7 @@ import { useGetProductsQuery } from "../features/productApiSlice";
 import Cart from "../components/Cart";
 import Paginate from "../components/Paginate";
 import Loading from "../components/Loading";
+import ProductCarousel from "../components/ProductCarousel";
 
 const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,7 +26,9 @@ const HomePage = () => {
 
   return (
     <div>
+      <ProductCarousel></ProductCarousel>
       {/* Limit Selector */}
+      <h2 className="text-2xl font-bold m-4">Products</h2>
       <div className="flex justify-end px-6 mb-4">
         <select
           value={limit}

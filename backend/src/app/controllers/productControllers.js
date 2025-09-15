@@ -59,7 +59,7 @@ const getProductById = asyncHandler(async (req, res) => {
 // @desc    Get product by ID
 // @access  Public
 const getTopProducts = asyncHandler(async (req, res) => {
-  const product = await Product.find({}).sort({rating: -1}).limit(3);
+  const product = await Product.find({}).sort({rating: -1}).limit(4);
   if(product){
     return res.json(product);
   }else{

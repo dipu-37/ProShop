@@ -29,7 +29,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-slate-700 text-white md:px-6 py-4 md:flex md:items-center md:justify-between px-4 sm:px-6 lg:px-8">
+    <header className="bg-slate-700 text-white md:px-6 py-4 md:flex md:items-center md:justify-between px-4 sm:px-6 lg:px-16">
       {/* Logo + Hamburger */}
       <div className="flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">
@@ -112,7 +112,7 @@ const Header = () => {
                     <img
                       src={
                         userInfo.avatar ||
-                        "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                        "/public/images/images (4).jpg"
                       }
                       alt={userInfo.name}
                     />
