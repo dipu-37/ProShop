@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../features/userApiSlice";
 import { logout } from "../features/authSlice";
 import { resetCart } from "../features/cartSlice";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { IoIosArrowDropdown } from "react-icons/io";
+import SearchBox from "./SearchBox";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const cart = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoutApiCall] = useLogoutMutation();
+
 
   const handleLogout = async () => {
     try {
@@ -30,8 +29,8 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-slate-700 text-white  md:px-6 py-4 md:flex md:items-center md:justify-between px-4 sm:px-6 lg:px-8">
-      {/* Left: Logo + Hamburger */}
+    <header className="bg-slate-700 text-white md:px-6 py-4 md:flex md:items-center md:justify-between px-4 sm:px-6 lg:px-8">
+      {/* Logo + Hamburger */}
       <div className="flex justify-between items-center">
         <Link to="/" className="text-xl font-bold">
           ProShop
@@ -50,7 +49,7 @@ const Header = () => {
           menuOpen ? "block" : "hidden"
         } md:flex md:items-center md:flex-row-reverse mt-2 md:mt-0 gap-4`}
       >
-        {/* Right side: Cart + Admin + User */}
+        {/* Right side: Cart / Admin / User */}
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
           {/* Cart */}
           <Link
@@ -106,12 +105,8 @@ const Header = () => {
 
           {/* User Avatar Dropdown */}
           <div className="relative dropdown">
-           
-
-            {/* User Dropdown / Login */}
             {userInfo ? (
               <div className="relative dropdown">
-                {/* Avatar button */}
                 <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
                     <img
@@ -124,7 +119,6 @@ const Header = () => {
                   </div>
                 </div>
 
-                {/* Dropdown menu */}
                 <ul
                   tabIndex={0}
                   className="menu menu-sm dropdown-content absolute bottom-full mb-2 sm:top-full sm:bottom-auto lg:right-0 sm:left-auto
@@ -137,29 +131,25 @@ const Header = () => {
                     <Link to="/settings">Settings</Link>
                   </li>
                   <li>
-                    <button type="button" onClick={handleLogout}>Logout</button>
+                    <button type="button" onClick={handleLogout}>
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>
             ) : (
-              <Link to="/login" className="btn btn-outline  border-e-white  text-white hover:bg-gray-500">
+              <Link
+                to="/login"
+                className="btn btn-outline border-e-white text-white hover:bg-gray-500"
+              >
                 Login
               </Link>
             )}
           </div>
         </div>
 
-        {/* Search Bar */}
-        <div className="flex gap-2 mt-2 md:mt-0 mb-2 md:mb-0">
-          <input
-            type="text"
-            placeholder="Search Products..."
-            className="input input-bordered w-full md:w-64 text-black"
-          />
-          {/* <button className="btn btn-outline  border-e-white  text-white hover:bg-gray-500">
-            Search
-          </button> */}
-        </div>
+        {/* Search Form */}
+       <SearchBox></SearchBox>
       </div>
     </header>
   );

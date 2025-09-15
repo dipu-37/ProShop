@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import App from "../App";
 import SignInPage from "../pages/SignInPage";
 import RegisterPage from "../pages/RegisterPage";
@@ -18,15 +17,13 @@ import ProductListPage from "../pages/Admin/ProductListPage";
 import ProductEditPage from "../pages/Admin/ProductEditPage";
 import UsersListPage from "../pages/Admin/usersListPage";
 import UserEditPage from "../pages/Admin/UserEditPage";
-
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      // Public routes
-      {index:true, path: "/", element: <HomePage /> },
-      { path: "/page/:pageNumber", element: <HomePage /> },
+      { index: true, path: "/", element: <HomePage /> },
+      { path: "products", element: <HomePage /> },
       { path: "product/:id", element: <ProductDetailsPage /> },
       { path: "cart", element: <CartPage /> },
       { path: "login", element: <SignInPage /> },
@@ -35,7 +32,7 @@ export const router = createBrowserRouter([
       // Private routes
       {
         path: "/",
-        element: <PrivateRoute />, // wrapper
+        element: <PrivateRoute />,
         children: [
           { path: "profile", element: <ProfilePage /> },
           { path: "shipping", element: <ShippingPage /> },
@@ -45,15 +42,16 @@ export const router = createBrowserRouter([
         ],
       },
 
-      // admin
+      // Admin
       {
         path: "/admin",
-        element: <AdminPrivateRoute />, // wrapper + layout if needed
-        children: [{ path: "orders", element: <OrderListPage /> },
-          {path:'products',element:<ProductListPage></ProductListPage>},
-          {path:'product/:id/edit',element:<ProductEditPage></ProductEditPage>},
-          {path:'users',element:<UsersListPage></UsersListPage>},
-          {path:'user/:id/edit',element:<UserEditPage></UserEditPage>},
+        element: <AdminPrivateRoute />,
+        children: [
+          { path: "orders", element: <OrderListPage /> },
+          { path: "products", element: <ProductListPage /> },
+          { path: "product/:id/edit", element: <ProductEditPage /> },
+          { path: "users", element: <UsersListPage /> },
+          { path: "user/:id/edit", element: <UserEditPage /> },
         ],
       },
     ],

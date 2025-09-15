@@ -31,7 +31,7 @@ const getProducts = asyncHandler(async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Products fetched successfully",
-      data: products,
+      products: products,
       meta: pagination,
     });
   } catch (err) {
