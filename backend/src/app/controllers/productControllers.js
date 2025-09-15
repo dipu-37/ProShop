@@ -55,6 +55,18 @@ const getProductById = asyncHandler(async (req, res) => {
     res.status(404).json({ message: "Product not found" });
   }
 });
+// @route   GET /api/products/top
+// @desc    Get product by ID
+// @access  Public
+const getTopProducts = asyncHandler(async (req, res) => {
+  const product = await Product.find({}).sort({rating: -1}).limit(3);
+  if(product){
+    return res.json(product);
+  }else{
+    res.status(404);
+    throw new Error("resource not found");
+  }
+});
 
 //@route  post/api/products
 //@desc
@@ -166,4 +178,5 @@ export {
   updateProduct,
   deleteProduct,
   createProductReview,
+  getTopProducts
 };
