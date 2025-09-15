@@ -99,5 +99,62 @@ npm run dev or start
 
 ```
 
-## api endPoint 
+## API Endpoints
+ Products
+```
+GET /api/products → Get all products (with pagination, search, etc)
 
+GET /api/products/top → Get top-rated products
+
+GET /api/products/:id → Get product by ID
+
+POST /api/products/admin/create → Create product (Admin only)
+
+POST /api/products/:id → Update product (Admin only, with image upload)
+
+DELETE /api/products/:id → Delete product (Admin only)
+
+POST /api/products/:id/reviews → Add product review (Authenticated user)
+
+```
+
+ Authentication
+```
+POST /api/user/auth/login → Login user
+
+POST /api/user/auth/register → Register new user
+
+POST /api/user/auth/logout → Logout user
+```
+ Users
+```
+GET /api/users/profile → Get user profile (Authenticated)
+
+PUT /api/users/profile → Update user profile (Authenticated)
+
+GET /api/users → Get all users (Admin only)
+
+GET /api/users/:id → Get user by ID (Admin only)
+
+PUT /api/users/:id → Update user (Admin only)
+
+DELETE /api/users/:id → Delete user (Admin only)
+```
+Orders
+```
+POST /api/orders → Create new order (Authenticated)
+
+GET /api/orders/myorders → Get logged-in user’s orders
+
+GET /api/orders/:id → Get order by ID (Authenticated)
+
+PUT /api/orders/:id/pay → Update order to paid (Authenticated)
+
+PUT /api/orders/:id/deliver → Mark order as delivered (Admin only)
+
+GET /api/orders → Get all orders (Admin only)
+```
+Payment
+``
+GET /api/config/paypal → Get PayPal client ID
+``
