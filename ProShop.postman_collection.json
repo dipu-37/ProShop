@@ -56,6 +56,164 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "create product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Camera\",\r\n  \"price\": 500,\r\n  \"image\": \"/images/camera.jpg\",\r\n  \"brand\": \"Canon\",\r\n  \"category\": \"Electronics\",\r\n  \"countInStock\": 10,\r\n  \"description\": \"High quality DSLR camera\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/admin/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"admin",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/gmdip/Downloads/jobFair_Entry_pass.jpg"
+								},
+								{
+									"key": "data",
+									"value": "{\n  \"name\": \"Camera\",\n  \"price\": 500,\n  \"brand\": \"Canon\",\n  \"category\": \"Electronics\",\n  \"countInStock\": 10,\n  \"description\": \"High quality DSLR camera\"\n}\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/68c01b2c31235fdfb1f41b53",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"68c01b2c31235fdfb1f41b53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/gmdip/Downloads/jobFair_Entry_pass.jpg"
+								},
+								{
+									"key": "data",
+									"value": "{\n  \"name\": \"Camera\",\n  \"price\": 500,\n  \"brand\": \"Canon\",\n  \"category\": \"Electronics\",\n  \"countInStock\": 10,\n  \"description\": \"High quality DSLR camera\"\n}\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/68c01b2c31235fdfb1f41b53",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"68c01b2c31235fdfb1f41b53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reviews product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\":\"3\",\r\n    \"comment\":\"i am happy\"\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/68bfb07a346519e38f9d0666/reviews",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"68bfb07a346519e38f9d0666",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTopProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/top",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"top"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -177,13 +335,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/users/68b44d8f54ffa241101d9139",
+							"raw": "{{baseUrl}}/users",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"users",
-								"68b44d8f54ffa241101d9139"
+								"users"
 							]
 						}
 					},
@@ -265,6 +422,183 @@
 							"path": [
 								"users",
 								"68b44d8f54ffa241101d9139"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "get all order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"dipu\",\r\n  \"email\": \"dipu@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMyOrder",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"dipu\",\r\n  \"email\": \"dipu@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/myorders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"myorders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"dipu\",\r\n  \"email\": \"dipu@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrderToPaid",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"dipu\",\r\n  \"email\": \"dipu@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/1/pay",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"1",
+								"pay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrderToDelivered",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"dipu\",\r\n  \"email\": \"dipu@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/1/deliver",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"1",
+								"deliver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"dipu\",\r\n  \"email\": \"dipu@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "paypalId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"dipu\",\r\n  \"email\": \"dipu@gmail.com\",\r\n  \"password\": \"123456\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/config/paypal",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"config",
+								"paypal"
 							]
 						}
 					},
