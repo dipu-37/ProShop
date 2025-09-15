@@ -14,7 +14,7 @@ const SearchBox = () => {
     } else {
       navigate(`/products?page=1`);
     }
-  }, 50000000000);
+  }, 500);
 
   useEffect(() => {
     handleSearch(searchText);
