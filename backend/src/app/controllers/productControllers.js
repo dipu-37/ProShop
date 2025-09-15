@@ -2,20 +2,46 @@ import { json } from "express";
 import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../models/productModel.js";
 import { sendImageToCloudinary } from "../utils/sendImageToCloudinary.js";
+import QueryBuilder from "../utils/queryBuilder.js";
 
 // @route   GET /api/products
 // @desc    Get all products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  console.log(req.params.pageNumber);
-  const pageSize = 5;
-  const page = Number(req.query.pageNumber) || 1;
-  const count = await Product.countDocuments();
+  // console.log(req.params.pageNumber);
+  // const pageSize = 5;
+  // const page = Number(req.query.pageNumber) || 1;
+  // const count = await Product.countDocuments();
 
-  const products = await Product.find({})
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
-  res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  // const products = await Product.find({})
+  //   .limit(pageSize)
+  //   .skip(pageSize * (page - 1));
+  // res.json({ products, page, pages: Math.ceil(count / pageSize) });
+
+  try {
+    const SearchableField = ["name", "category"];
+    const queryBuilder = new QueryBuilder(Product.find(), req.query)
+      .search(SearchableField)
+      .filter()
+      .paginate()
+      .fields();
+
+    const products = await queryBuilder.modelQuery;
+    const pagination = await queryBuilder.countTotal();
+    res.status(200).json({
+      success: true,
+      message: "Products fetched successfully",
+      data: products,
+      meta: pagination,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch products",
+      error: err.message,
+    });
+  }
 });
 
 // @route   GET /api/products/:id
